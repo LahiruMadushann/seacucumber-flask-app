@@ -76,3 +76,4 @@ ultralytics-thop==2.0.6
 urllib3==2.2.2
 Werkzeug==3.0.3
 wrapt==1.16.0
+gunicorn
