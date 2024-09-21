@@ -241,7 +241,7 @@ def predict():
         # img_path = "C:/Users/Jeevake/Seacucumber/2024_09_15/demarcations/Bohadschia Marmorata Class A/PXL_20240408_051936593.jpg"
         class_labels = ['Bohadschia Marmorata Class A', 'Bohadschia Vitiensis Class A', 'Holothuria Spinifera Class A', 'Holothuria Spinifera Class B', 'Stichopus Naso Class A','Holothuria Scabra Class C','Holothuria Scabra Class A','Holothuria Scabra Class B']
 
-        model,yolo_model = load_models()
+        # model,yolo_model = load_models()
         # pred_label,pred_prob,text = prediction_probability_label(model,yolo_model, image, class_labels)
 
         response = {
