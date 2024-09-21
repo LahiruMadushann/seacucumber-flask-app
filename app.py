@@ -99,6 +99,8 @@ def find_image_center(image):
     center_y = height / 2
     return center_x, center_y
 
+model,yolo_model = load_models()
+
 def prediction_probability_label(model,modelYolo, image, class_labels, is_rgb=True)->tuple:
    
    # Convert the PIL image to an array and resize it
@@ -221,7 +223,7 @@ def prediction_probability_label(model,modelYolo, image, class_labels, is_rgb=Tr
         print()
 
     return (pred_label, pred_prob,text)
-
+ 
 @app.route("/predict", methods=["POST"])
 def predict():
     try: 
@@ -241,7 +243,7 @@ def predict():
         # img_path = "C:/Users/Jeevake/Seacucumber/2024_09_15/demarcations/Bohadschia Marmorata Class A/PXL_20240408_051936593.jpg"
         class_labels = ['Bohadschia Marmorata Class A', 'Bohadschia Vitiensis Class A', 'Holothuria Spinifera Class A', 'Holothuria Spinifera Class B', 'Stichopus Naso Class A','Holothuria Scabra Class C','Holothuria Scabra Class A','Holothuria Scabra Class B']
 
-        model,yolo_model = load_models()
+        # model,yolo_model = load_models()
         # pred_label,pred_prob,text = prediction_probability_label(model,yolo_model, image, class_labels)
 
         response = {
