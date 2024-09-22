@@ -22,7 +22,7 @@ from ultralytics import YOLO
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Global variables to hold models, will be lazily loaded
 cnn_model = None
@@ -98,8 +98,6 @@ def find_image_center(image):
     center_x = width / 2
     center_y = height / 2
     return center_x, center_y
-
-model,yolo_model = load_models()
 
 def prediction_probability_label(model,modelYolo, image, class_labels, is_rgb=True)->tuple:
    
@@ -223,7 +221,7 @@ def prediction_probability_label(model,modelYolo, image, class_labels, is_rgb=Tr
         print()
 
     return (pred_label, pred_prob,text)
- 
+
 @app.route("/predict", methods=["POST"])
 def predict():
     try: 
@@ -240,17 +238,18 @@ def predict():
         image = Image.open(file.stream)
         print(f' * Image: {image}')
 
-        # img_path = "C:/Users/Jeevake/Seacucumber/2024_09_15/demarcations/Bohadschia Marmorata Class A/PXL_20240408_051936593.jpg"
+        #img_path = "C:/Users/Jeevake/Seacucumber/2024_09_15/demarcations/Bohadschia Marmorata Class A/PXL_20240408_051936593.jpg"
         class_labels = ['Bohadschia Marmorata Class A', 'Bohadschia Vitiensis Class A', 'Holothuria Spinifera Class A', 'Holothuria Spinifera Class B', 'Stichopus Naso Class A','Holothuria Scabra Class C','Holothuria Scabra Class A','Holothuria Scabra Class B']
 
-        # model,yolo_model = load_models()
-        # pred_label,pred_prob,text = prediction_probability_label(model,yolo_model, image, class_labels)
+        model,yolo_model = load_models()
+        pred_label,pred_prob,text = prediction_probability_label(model,yolo_model, image, class_labels)
 
+        
         response = {
             'prediction': {
-                'pred_label': "pred_label",
-                'pred_prob': "pred_prob",
-                'text': "text",
+                'pred_label': pred_label,
+                'pred_prob': pred_prob,
+                'text': text,
             }
         }
         return jsonify(response)
@@ -260,4 +259,4 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
